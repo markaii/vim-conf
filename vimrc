@@ -1,239 +1,156 @@
-" All system-wide defaults are set in $VIMRUNTIME/debian.vim (usually just
-" /usr/share/vim/vimcurrent/debian.vim) and sourced by the call to :runtime
-" you can find below.  If you wish to change any of those settings, you should
-" do it in this file (/etc/vim/vimrc), since debian.vim will be overwritten
-" everytime an upgrade of the vim packages is performed.  It is recommended to
-" make changes after sourcing debian.vim since it alters the value of the
-" 'compatible' option.
+" >^.^<
+" 关闭vi兼容,必须放在第一行
+set nocompatible
 
-" This line should not be removed as it ensures that various options are
-" properly set to work with the Vim-related packages available in Debian.
-runtime! debian.vim
-
-" Uncomment the next line to make Vim more Vi-compatible
-" NOTE: debian.vim sets 'nocompatible'.  Setting 'compatible' changes numerous
-" options, so any other options should be set AFTER setting 'compatible'.
-"set compatible
-
-" Vim5 and later versions support syntax highlighting. Uncommenting the next
-" line enables syntax highlighting by default.
+" 语法高亮
 if has("syntax")
-  syntax on
+    syntax on
 endif
 
-" If using a dark background within the editing area and syntax highlighting
-" turn on this option as well
+" 处理未保存文件时弹出确认
+set confirm
+
+" 黑色背景
 set background=dark
 
-" Uncomment the following to have Vim jump to the last position when
-" reopening a file
-"if has("autocmd")
-"  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-"endif
+" 配色方案
+colorscheme molokai
 
-" Uncomment the following to have Vim load indentation rules and plugins
-" according to the detected filetype.
-"if has("autocmd")
-"  filetype plugin indent on
-"endif
-
-" The following are commented out as they cause vim to behave a lot
-" differently from regular Vi. They are highly recommended though.
-set showcmd		" Show (partial) command in status line.
-set showmatch		" Show matching brackets.
-"set ignorecase		" Do case insensitive matching
-"set smartcase		" Do smart case matching
-"set incsearch		" Incremental search
-set autowrite		" Automatically save before commands like :next and :make
-"set hidden             " Hide buffers when they are abandoned
-set mouse=a		" Enable mouse usage (all modes)
-set selection=exclusive
-set selectmode=mouse,key
-
-set nocompatible
-filetype off
-
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-"let Vundle manage Vundle
-"required
-
-Bundle 'gmarik/vundle'
-
-"My Bundle here:
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"语法高亮
-"""""""""""""""""""""""""""""
-
-"above the Vim UI
-"""""""""""""""""""""""""""""
-Bundle 'winmanager'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'taglist.vim'
-
-"AutoComplet
-""""""""""""""""""""""""""""
-Bundle 'Pydiction'
-Bundle 'AutoComplPop'
-Bundle 'closetag.vim'
-
-"search
-""""""""""""""""""""""""""""
-Bundle 'cscope.vim'
-
-"syntax and style checker
-""""""""""""""""""""""""""""
-Bundle 'vim-flake8'
-
-"unittest
-""""""""""""""""""""""""""""
-Bundle 'vim-pyunit'
-
-"Tools
-""""""""""""""""""""""""""""
-Bundle 'grep.vim'
-
-"Color
-""""""""""""""""""""""""""""
-Bundle 'TagHighlight'
-Bundle 'vim-color-solarized'
-
-"auto-complete for quotes, etc
-""""""""""""""""""""""""""""
-Bundle 'delimitMate'
-Bundle 'vim-surround'
-
-"tab
-""""""""""""""""""""""""""""
-Bundle 'supertab'
-
-"markdown
-""""""""""""""""""""""""""""
-"Bundle 'markdown'
-"Bundle 'instant-markdown-d'
-
-filetype indent plugin on "required
-"
-" Brief help
-" :BundleList
-" :BundleInstall(!)
-" :BundleSearch(!)
-" :BundleClean(!)
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-set laststatus=2
-
-set ruler
-
-"for copy convient, use <F2> to on/off number display
-nnoremap <F2> :set nonumber!<CR>:set foldcolumn=0<CR>
-set number
-
-set modeline
-
-set tabstop=4
-set shiftwidth=4
-set expandtab
-
-set softtabstop=4
+" 自动对齐
 set autoindent
+
+" 智能对齐
 set smartindent
 
-set background=dark
+" 显示行号
+set number
 
-"与windows共享剪贴板
+" 打开状态栏标尺
+set ruler
+
+" 显示状态行
+set laststatus=2
+
+" 高亮显示对应的括号
+set showmatch
+
+" 在状态行显示目前所执行的命令，未完成的指令片段亦会显示出来
+set showcmd
+
+" 与电脑共享剪贴板
 set clipboard+=unnamed
 
-"Tags的设定
-"""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 按照名称排序
-let Tlist_Sort_Type = "name"
+" 将md文件的类型转成markdown
+" autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
-" 在右侧显示窗口
-let Tlist_Use_Right_Window = 0
- 
-" 压缩方式
-let Tlist_Compart_Format = 1
- 
-" 如果只有一个buffer，kill窗口也kill掉buffer
-let Tlist_Exist_OnlyWindow = 1
-                  
-" 不要关闭其他文件的tags
-let Tlist_File_Fold_Auto_Close = 0
-                       
-" 不要显示折叠树
-let Tlist_Enable_Fold_Column = 0
+" 将ejs文件的类型转成html
+autocmd BufNewFile,BufReadPost *.ejs set filetype=html
 
-" 设置全局tags
-set tags+=/usr/include/tags
-set tags+=/home/markaii/Work/Python/qrcard-web/trunk/qrcard
+""""""""""""缩进"""""""""""""""
+" 打开文件类型\插件\缩进检测
+filetype plugin indent on
 
-" Taglist
-"""""""""""""""""""""""""""""""""""""""
-let Tlist_Auto_Highlight_Tag = 1
-let Tlist_Auto_Open = 1
-let Tlist_Auto_Update = 1
-let Tlist_Close_On_Select = 0
-let Tlist_Compact_Format = 0
-let Tlist_Display_Prototype = 0
-let Tlist_File_Fold_Auto_Close = 1
-let Tlist_GainFocus_On_ToggleOpen = 0"开启vim后焦点在taglist上
-let Tlist_Hightlight_Tag_On_BufEnter = 1
-let Tlist_Inc_Winwidth = 0
-let Tlist_Exit_OnlyWindow = 1 
-let Tlist_Max_Submenu_Items = 1
-let Tlist_Max_Tag_Length = 30
-let Tlist_Process_File_Always = 0
-let Tlist_Show_Menu = 1
-let Tlist_Show_One_File = 0
-let Tlist_Sort_Type = "order"
-let Tlist_Use_Horiz_Window = 0
-let Tlist_Use_Right_Window = 1
-let Tlist_WinWidth = 30
-"let Tlist_WinHeight = 20
-nnoremap <silent> <F8> :TlistToggle<CR> 
+" 默认设置4个字符缩进
+" 设置tab键宽度
+set tabstop=4
 
-"启动WinManager
+set softtabstop=4
+set shiftwidth=4
+
+" 用空格代替tab
+set expandtab
+
+" 设置javascript, coffeescript, html, css, less, sass, coffeescript, json, xml缩进2个字符
+autocmd FileType javascript,coffee,html,htm,css,less,sass,coffee,json,xml set tabstop=2
+autocmd FileType javascript,coffee,html,htm,css,less,sass,coffee,json,xml set shiftwidth=2
+autocmd FileType javascript,coffee,html,htm,css,less,sass,coffee,json,xml set softtabstop=2
+
+""""""""""""插件安装"""""""""""""
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
+
+" 添加插件的地方
+" let Vundle manage Vundle
+Plugin 'gmarik/Vundle.vim'
+
+" 配色方案
+Plugin 'altercation/vim-colors-solarized'
+
+" 窗口管理
+Plugin 'winmanager'
+" 目录管理
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
+
+" 查找
+Plugin 'grep.vim'
+
+" 标签列表
+Plugin 'tagbar'
+
+" 自动补全插件YouCompleteMe
+Plugin 'Valloric/YouCompleteMe'
+
+" javascript自动补全
+Plugin 'marijnh/tern_for_vim'
+
+" 代码检查插件 syntastic
+Plugin 'scrooloose/syntastic'
+
+" 代码片段补全UltiSnips
+" Track the engine.
+ Plugin 'SirVer/ultisnips'
+"
+" " Snippets are separated from the engine. Add this if you want them:
+ Plugin 'honza/vim-snippets'
+
+call vundle#end()
+filetype plugin indent on
+
+""""""""""""插件配置"""""""""""""
+" 启动WinManager
 let g:winManagerWindowLayout='FileExplorer'
 nmap wm :WMToggle<cr>
 
-"NerdTree
-"""""""""""""""""""""""""""""""""""""""""""""
-"设置F9快捷键
+""""NerdTree配置""""
+" 设置F9快捷键
 map <F9> :NERDTreeToggle<CR>
 
-"NerdCommenter
-"""""""""""""""""""""""""""""""""""""""""""""
-let mapleader="," "修改<leader>的映射为','
+""""NerdCommenter""""
+"修改<leader>的映射为','
+let mapleader="," 
 
-"Grep F3-工程内查找
-"""""""""""""""""""""""""""""""""""""""""""""
+""""Grep F3-工程内查找""""
 nnoremap <silent> <F3> :Grep<CR>
 
-"flake8 tip
-"""""""""""""""""""""""""""
-" autocmd BufWritePost *.py call Flake8()
-let g:flake8_ignore="F403,E501"
+""""F8打开标签列表""""
+nmap <F8> :TagbarToggle<CR>
 
-"python sp
-"""""""""""""""""""""""""""""""""""""""""""""
-"pydiction 1.2 python auto complete
-let g:pydiction_location = '~/.vim/bundle/Pydiction/complete-dict'
-"defalut g:pydiction_menu_height == 15    
-let g:pydiction_menu_height = 20 
+""""YouCompleteMe配置""""
+let g:ycm_error_symbol = '>>'
+let g:ycm_warning_symbol = '>*'
+nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
-"supertab
-""""""""""""""""
+""""syntastic配置""""
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
-"color-settings
-set t_Co=256
-set background=dark
-"colorscheme solarized
-colorscheme molokai
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
-" Source a global configuration file if available
-if filereadable("/etc/vim/vimrc.local")
-  source /etc/vim/vimrc.local
-endif
+""""ultisnips配置""""
+"Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+

@@ -1,4 +1,4 @@
 vim-conf
 ========
 
-my vim configure
+my vim config
